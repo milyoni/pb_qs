@@ -1,10 +1,7 @@
 require 'rspec'
 require './phonebook'
 
-describe "Example" do 
-  it "fails" do 
-    expect(1).to eq 2
-  end
+describe "an example" do
+  it "is a pending example"
 end
-
 
