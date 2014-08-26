@@ -1,0 +1,16 @@
+1. User should be able to create phonebooks
+
+2. User should be able to add a new contact to a phonebook 
+  - a contact should contain a name and phone number
+
+3. User should be able to update a contact's number by name
+
+4. User should be able to search a phonebook by name and get number
+
+5. User should be able to search a phonebook by number and get name  
+
+6. User should be able to print a list of all contacts in the phonebook
+
+7. User should be able to import a list of csv  example below
+
+"Cara Larson,000-000-0001\nTiffaney Reynosa,000-000-0002\nBlythe Barba,000-000-0003\nFlorene Haliburton,000-000-0004\nChristene Hittle,000-000-0011\nEmilee Lanning,000-000-0012\nHiroko Lackey,000-000-0013\nIla Duggins,000-000-0014"
