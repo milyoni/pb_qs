@@ -1,3 +1,5 @@
+[In Ruby Only - User basic ruby class, no gems]
+
 1. User should be able to create phonebooks
 
 2. User should be able to add a new contact to a phonebook 
