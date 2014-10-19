@@ -8,7 +8,7 @@ Manages multiple phone books.
 To run
 ------
 
-ruby ./phonebook.rb
+    ruby ./phonebook.rb
 
 Tests
 -----
@@ -16,7 +16,7 @@ Tests
 Although the project requires that gems not be used, rspec and rr are included
 for easy testing. The actual "production" code does not use gems.
 
-Run tests: `rspec phonebook_spec.rb`
+Run tests: `rspec spec/*_spec.rb`
 
 
 Data Files
