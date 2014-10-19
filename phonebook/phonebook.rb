@@ -1,3 +1,5 @@
+require 'csv'
+
 class PhoneBook
   attr_accessor :phonebook
 
@@ -22,6 +24,17 @@ class PhoneBook
   def print_book
     # File browser needed in a real project
     puts File.read @phonebook
+  end
+
+  def import
+    print "Type in the file name that you want to import: "
+    csv = CSV.read(@phonebook)
+    count = csv.length
+    CSV.open(@phonebook, "ab") do |csv|
+      CSV.read(STDIN.gets().chomp()).each_with_index do |line, i|
+        csv << [count + i + 1] + line
+      end
+    end
   end
 end
 

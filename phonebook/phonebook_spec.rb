@@ -14,7 +14,7 @@ describe "Phonebook" do
       tempfile.close
       tempfile.unlink
       begin
-        mock(STDIN).gets() {path}
+        mock(STDIN).gets() {path + "\n"}
         expect( File.exists?(path) ).to be false
 
         pb = PhoneBook.new
@@ -30,7 +30,7 @@ describe "Phonebook" do
 
   describe "#select" do
     it "should allow the user to select the current phonebook" do
-      mock(STDIN).gets {'x'}
+      mock(STDIN).gets {'x' + "\n"}
       pb = PhoneBook.new
       pb.select
 
@@ -54,8 +54,35 @@ describe "Phonebook" do
   end
 
   describe "#import" do
-    it "should import a given csv file"
-    it "should not overwrite existing phonebook entries"
+    it "should import a given csv file, adding to existing data" do
+      def setup(test_data, existing_data)
+        csv = Tempfile.new(['foo', '.csv'])
+        csv.write(CSV.generate_line(test_data))
+        csv.close
+        pb_file = Tempfile.new(['foo', '.pb'])
+        pb_file.write(CSV.generate_line(existing_data))
+        pb_file.close
+
+        mock(STDIN).gets() {csv.path + "\n"}
+
+        return csv, pb_file
+      end
+      begin
+        test_data = ["test","data"]
+        existing_data = ["1","existing","data"]
+        output = [existing_data, ["2"] + test_data]
+
+        csv, pb_file = setup(test_data, existing_data)
+
+        pb = PhoneBook.new(pb_file.path)
+        pb.import
+
+        expect( CSV.read(pb_file.path) ).to eql output
+      ensure
+        csv.unlink
+        pb_file.unlink
+      end
+    end
   end
 end
 
