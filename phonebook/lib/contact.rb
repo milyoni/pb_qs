@@ -1,4 +1,8 @@
+require 'lib/conio'
+
 class Contact
+  extend ConIO
+  include ConIO
   attr_accessor :phonebook
   NUMBER = 2
   NAME = 1
@@ -9,17 +13,14 @@ class Contact
   end
 
   def self.add_new(phonebook)
-    print "Enter new name: "
-    name = STDIN.gets().chomp()
-    print "Enter new number: "
-    number = STDIN.gets().chomp()
+    name = prompt('Enter new name: ')
+    number = prompt('Enter new number: ')
     phonebook.add_entry(name, number)
   end
 
   def update
     index = find_by_name(true)
-    print "Enter new number: "
-    number = STDIN.gets().chomp()
+    number = prompt('Enter new number: ')
     lines = CSV.read(@phonebook.phonebook)
     @phonebook.write("wb") do |csv|
       lines.each do |line|
@@ -30,19 +31,16 @@ class Contact
   end
 
   def find_by_name(get_index=false)
-    print "Enter name to find: "
-    name = STDIN.gets().chomp().downcase()
-    find NAME, name
+    find NAME, prompt('Enter name to find: ').downcase()
     if get_index
-      print "Enter index number to change: "
-      return STDIN.gets().chomp()
+      return prompt('Enter index number to change: ')
     end
   end
 
+  # Not a requirement, but we can leverage this method to ask for which record
+  # to update, just like we did with find_by_name
   def find_by_number
-    print "Enter number to find: "
-    number = STDIN.gets().chomp().downcase()
-    find NUMBER, number
+    find NUMBER, prompt('Enter number to find: ').downcase()
   end
 
   private
@@ -51,7 +49,7 @@ class Contact
   end
 
   def find(key, item)
-    CSV.read(@phonebook.phonebook).each do |line|
+    @phonebook.read do |line|
       print_entry line if /#{item}/ === line[key].downcase
     end
   end

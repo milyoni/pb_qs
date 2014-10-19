@@ -59,7 +59,7 @@ describe "Menu" do
           mock(pb).create
           mock(pb).select
         end
-        
+
         pb = @menu.phonebook
         mock(pb).print_book
         mock(pb).import

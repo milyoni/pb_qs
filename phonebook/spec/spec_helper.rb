@@ -6,7 +6,6 @@ RSpec.configure do |config|
   config.mock_with :rr
 end
 
-
 def write_temp_csv(file, data)
   name, ext = file.split('.')
   ext = '.' + ext

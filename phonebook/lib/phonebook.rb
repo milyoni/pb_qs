@@ -1,6 +1,9 @@
 require 'fileutils'
 require 'csv'
+require 'lib/conio'
+
 class PhoneBook
+  include ConIO
   attr_accessor :phonebook
 
   def initialize(pb = nil)
@@ -8,8 +11,7 @@ class PhoneBook
   end
 
   def create
-    print "Enter a file name for the new phone book: "
-    file = STDIN.gets().chomp()
+    file = prompt('Enter a file name for the new phone book: ')
     FileUtils.touch(file)
     @phonebook = file
   end
@@ -17,8 +19,7 @@ class PhoneBook
   def select
     # We're not going to show the user a list of phone books for this exercise.
     # We should, though. Something like a file browser.
-    print "Type in the phone book file name: "
-    @phonebook = STDIN.gets().chomp()
+    @phonebook = prompt('Enter the phone book file name: ')
   end
 
   def print_book
@@ -28,25 +29,27 @@ class PhoneBook
   end
 
   def import
-    print "Type in the file name that you want to import: "
-    count = CSV.read(@phonebook).length
+    file = prompt('Enter the file name that you want to import: ')
+    count = number_of_entries
     write do |csv|
-      CSV.read(STDIN.gets().chomp()).each_with_index do |line, i|
-        csv << [count + i + 1] + line
-      end
+      CSV.read(file).each_with_index {|line, i| csv << [count + i + 1] + line }
     end
   end
 
   def write(mode="ab")
-    CSV.open(@phonebook, mode) do |csv|
-      yield csv
-    end
+    CSV.open(@phonebook, mode) { |csv| yield csv }
+  end
+
+  def read
+    CSV.read(@phonebook).each { |line| yield line }
   end
 
   def add_entry(name, number)
-    count = CSV.read(@phonebook).length
-    CSV.open(@phonebook, "ab") do |csv|
-      csv << [count + 1, name, number]
-    end
+    count = number_of_entries
+    write { |csv| csv << [count + 1, name, number] }
+  end
+
+  def number_of_entries
+    CSV.read(@phonebook).length
   end
 end

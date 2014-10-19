@@ -1,10 +1,14 @@
+require 'conio'
+
 class Menu
+  include ConIO
   attr_accessor :phonebook
+
   def show
     input = nil
     while !input || input != 'q'
       display_menu
-      input = STDIN.gets.chomp.downcase
+      input = prompt("Selection: ").downcase()
       process input
     end
   end
@@ -24,7 +28,7 @@ N - Lookup names by number
     end
     puts 'Q - Quit'
     puts "Current phone book: #{@phonebook.phonebook}" if @phonebook
-    print "-"*20 + "\nSelection: "
+    puts "-"*20 
   end
 
   def process(input)
