@@ -1,3 +1,8 @@
+source 'https://rubygems.org'
+
 # Just for tests: the phonebook_spec.rb already existed, and you need rspec to run tests properly.
-gem 'rspec'
-gem 'rr'
+group :development, :test do
+    gem 'rspec'
+    gem 'rr'
+    gem 'rake'
+end
