@@ -35,4 +35,11 @@ class PhoneBook
       end
     end
   end
+
+  def add_entry(name, number)
+    count = CSV.read(@phonebook).length
+    CSV.open(@phonebook, "ab") do |csv|
+      csv << [count + 1, name, number]
+    end
+  end
 end

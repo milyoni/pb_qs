@@ -50,12 +50,8 @@ describe "Phonebook" do
   describe "#import" do
     it "should import a given csv file, adding to existing data" do
       def setup(test_data, existing_data)
-        csv = Tempfile.new(['foo', '.csv'])
-        csv.write(CSV.generate_line(test_data))
-        csv.close
-        pb_file = Tempfile.new(['foo', '.pb'])
-        pb_file.write(CSV.generate_line(existing_data))
-        pb_file.close
+        csv = write_temp_csv('foo.csv', test_data)
+        pb_file = write_temp_csv('foo.pb', existing_data)
 
         mock(STDIN).gets() {csv.path + "\n"}
 

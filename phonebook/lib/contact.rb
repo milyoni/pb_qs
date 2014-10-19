@@ -1,6 +1,10 @@
 class Contact
-  def add_new
-
+  def self.add_new(phonebook)
+    print "Enter new name: "
+    name = STDIN.gets().chomp()
+    print "Enter new number: "
+    number = STDIN.gets().chomp()
+    phonebook.add_entry(name, number)
   end
   def find_by_name
 

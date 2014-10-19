@@ -2,8 +2,21 @@ require 'spec_helper'
 
 describe "Contact" do
   describe "#add_new" do
-    it "should add the given entry to the current phonebook"
-    it "should print an error and not add the entry"
+    it "should add the given entry to the current phonebook" do
+      begin
+        csv = write_temp_csv('x.pb', ["x"])
+        pb = PhoneBook.new(csv.path)
+        mock(STDIN).gets() {"My name\n"}
+        mock(STDIN).gets() {"123-555-1212\n"}
+        output = [['x'], ['2', 'My name', '123-555-1212']]
+
+        Contact.add_new(pb)
+
+        expect( CSV.read(csv.path) ).to eql output
+      ensure
+        #csv.unlink
+      end
+    end
   end
 
   describe "#delete" do

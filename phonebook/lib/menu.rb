@@ -23,6 +23,7 @@ N - Lookup names by number
       EOT
     end
     puts 'Q - Quit'
+    puts "Current phone book: #{@phonebook.phonebook}" if @phonebook
     print "-"*20 + "\nSelection: "
   end
 

@@ -7,3 +7,11 @@ RSpec.configure do |config|
 end
 
 
+def write_temp_csv(file, data)
+  name, ext = file.split('.')
+  ext = '.' + ext
+  csv = Tempfile.new([name, ext])
+  csv.write(CSV.generate_line(data))
+  csv.close
+  return csv
+end

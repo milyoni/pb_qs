@@ -16,7 +16,7 @@ Tests
 Although the project requires that gems not be used, rspec and rr are included
 for easy testing. The actual "production" code does not use gems.
 
-Run tests: `rspec spec/*_spec.rb`
+Run tests: `rake`
 
 
 Data Files
