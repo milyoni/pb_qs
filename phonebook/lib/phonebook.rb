@@ -23,16 +23,23 @@ class PhoneBook
 
   def print_book
     # File browser needed in a real project
+    # TODO Should format the output
     puts File.read @phonebook
   end
 
   def import
     print "Type in the file name that you want to import: "
     count = CSV.read(@phonebook).length
-    CSV.open(@phonebook, "ab") do |csv|
+    write do |csv|
       CSV.read(STDIN.gets().chomp()).each_with_index do |line, i|
         csv << [count + i + 1] + line
       end
+    end
+  end
+
+  def write(mode="ab")
+    CSV.open(@phonebook, mode) do |csv|
+      yield csv
     end
   end
 

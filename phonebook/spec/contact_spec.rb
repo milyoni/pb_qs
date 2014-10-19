@@ -36,15 +36,32 @@ describe "Contact" do
     it "should be brought up with product manager"
   end
 
-  describe "#update" do
-    it "should allow the user to update a contact's number by name"
-  end
-
-  describe "search for contacts" do
+  describe "working with contacts" do
     before do
       csv = write_temp_csv('x.pb', @data)
-      pb = PhoneBook.new(csv.path)
-      @contact = Contact.new(pb)
+      @pb = PhoneBook.new(csv.path)
+      @contact = Contact.new(@pb)
+    end
+
+    describe "#update" do
+      it "should allow the user to update a contact's number by name" do
+        mock(STDIN).gets() { "hiroko\n"}
+        mock(STDIN).gets() { "7\n"}
+        mock(STDIN).gets() { "111-222-3333\n"}
+
+        @contact.update
+
+        expect(CSV.read(@pb.phonebook)).to eql [
+          ["1", "Cara Larson", "000-000-0001"],
+          ["2", "Tiffaney Reynosa", "000-000-0002"],
+          ["3", "Blythe Barba", "000-000-0003"],
+          ["4", "Florene Haliburton", "000-000-0004"],
+          ["5", "Christene Hittle", "000-000-0011"],
+          ["6", "Emilee Lanning", "000-000-0012"],
+          ["7", "Hiroko Lackey", "111-222-3333"],
+          ["8", "Ila Duggins", "000-000-0014"]
+        ]
+      end
     end
 
     describe "#find_by_name" do
@@ -55,7 +72,7 @@ describe "Contact" do
         @contact.find_by_name()
       end
 
-      it "should look up numbers given a name partial name" do
+      it "should look up numbers given a partial name" do
         mock(STDIN).gets() { "ON\n"}
         mock(STDOUT).puts("1\t000-000-0001\tCara Larson")
         mock(STDOUT).puts("4\t000-000-0004\tFlorene Haliburton")
