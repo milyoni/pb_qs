@@ -5,6 +5,13 @@ class PhoneBook
     FileUtils.touch(file)
     return file
   end
+
+  def select
+    # We're not going to show the user a list of phone books for this exercise.
+    # We should, though. Something like a file browser.
+    print "Type in the phone book file name: "
+    return STDIN.gets().chomp()
+  end
 end
 
 class Contact

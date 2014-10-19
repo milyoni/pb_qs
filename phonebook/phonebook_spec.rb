@@ -29,7 +29,11 @@ describe "Phonebook" do
   end
 
   describe "#select" do
-    it "should allow the user to select the current phonebook"
+    it "should allow the user to select the current phonebook" do
+      mock(STDIN).gets {'x'}
+      expect(PhoneBook.new.select).to eql 'x'
+    end
+
   end
 
   describe "#print" do
