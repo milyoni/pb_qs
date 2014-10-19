@@ -1,6 +1,6 @@
 class PhoneBook
   def create
-    puts "Enter a file name for the new phone book"
+    print "Enter a file name for the new phone book: "
     file = STDIN.gets().chomp()
     FileUtils.touch(file)
     return file
@@ -23,6 +23,7 @@ class Menu
   end
 
   def display_menu
+    puts "\n" + '-' * 20
     puts 'S - Select phone book'
     puts 'C - Create phone book'
     if @phonebook
@@ -35,6 +36,7 @@ N - Lookup names by number
       EOT
     end
     puts 'Q - Quit'
+    print "-"*20 + "\nSelection: "
   end
 
   def process(input)
