@@ -1,6 +1,10 @@
 require 'rspec'
 require './phonebook'
 
+RSpec.configure do |config|
+  config.mock_with :rr
+end
+
 describe "Phonebook" do
   describe "#create" do
     it "should create a new phonebook"
@@ -41,5 +45,28 @@ describe "Contact" do
 
   describe "#find_by_number" do
     it "should look up names given a number"
+  end
+end
+
+describe "Menu" do
+  describe "#show" do
+    it "should take user input as a letter and process it" do
+      any_instance_of(Menu) do |m|
+        mock(m).process("a")
+        mock(m).process("q")
+      end
+      mock(STDIN).gets() {"A\n"}
+      mock(STDIN).gets() {"q\n"}
+      Menu.new.show
+    end
+  end
+
+  describe "#process" do
+    describe "when a phonebook isn't open" do
+      it "should only allow creating and quitting"
+    end
+    describe "when a phonebook is open" do
+      it "should allow all actions"
+    end
   end
 end
