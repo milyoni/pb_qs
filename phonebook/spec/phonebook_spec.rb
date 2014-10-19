@@ -58,9 +58,9 @@ describe "Phonebook" do
         return csv, pb_file
       end
       begin
-        test_data = ["test","data"]
-        existing_data = ["1","existing","data"]
-        output = [existing_data, ["2"] + test_data]
+        test_data = [["test","data"]]
+        existing_data = [["1","existing","data"]]
+        output = existing_data +[["2"] + test_data[0]]
 
         csv, pb_file = setup(test_data, existing_data)
 

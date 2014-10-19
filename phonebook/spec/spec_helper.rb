@@ -11,7 +11,9 @@ def write_temp_csv(file, data)
   name, ext = file.split('.')
   ext = '.' + ext
   csv = Tempfile.new([name, ext])
-  csv.write(CSV.generate_line(data))
+  data.each do |line|
+    csv.write(CSV.generate_line(line))
+  end
   csv.close
   return csv
 end

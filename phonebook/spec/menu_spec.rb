@@ -6,6 +6,7 @@ describe "Menu" do
       any_instance_of(Menu) do |m|
         mock(m).process("a")
         mock(m).process("q")
+        stub(m).display_menu
       end
       mock(STDIN).gets() {"A\n"}
       mock(STDIN).gets() {"q\n"}
