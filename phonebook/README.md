@@ -1,7 +1,7 @@
 Phonebook
 ---------
 
-A simple command-line phone ook program.
+A simple command-line phone book program.
 
 Manages multiple phone books.
 
