@@ -1,12 +1,13 @@
-#STATE = {
-#  phonebook: nil,
-#}
 class PhoneBook
 
 end
 
+class Contact
+
+end
 
 class Menu
+  attr_accessor :phonebook
   def show
     input = nil
     while !input || input != 'q'
@@ -17,10 +18,44 @@ class Menu
   end
 
   def display_menu
+    puts 'S - Select phone book'
+    puts 'C - Create phone book'
+    if @phonebook
+      puts <<-EOT
+P - Print phone book
+I - Import CSV file into phone book
+A - Add new contact
+F - Lookup numbers by name
+N - Lookup names by number
+      EOT
+    end
+    puts 'Q - Quit'
   end
 
   def process(input)
+    if !@phonebook && 'piadufn'.include?(input)
+      puts 'No phone books selected. Please select a phonebook.'
+      return
+    end
 
+    case input
+    when 'q'
+      return
+    when 's'
+      @phonebook = PhoneBook.new.select
+    when 'c'
+      @phonebook = PhoneBook.new.create
+    when 'i'
+      @phonebook.import
+    when 'a'
+      Contact.add_new(@phonebook)
+    when 'f'
+      Contact.new.find_by_name(@phonebook)
+    when 'n'
+      Contact.new.find_by_number(@phonebook)
+    else
+      puts 'Invalid choice'
+    end
   end
 end
 

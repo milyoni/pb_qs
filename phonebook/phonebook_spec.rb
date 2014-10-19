@@ -62,11 +62,57 @@ describe "Menu" do
   end
 
   describe "#process" do
-    describe "when a phonebook isn't open" do
-      it "should only allow creating and quitting"
+    before do
+      @menu = Menu.new
     end
+
+    def run_menu
+      @menu.process('p')
+      @menu.process('i')
+      @menu.process('a')
+      @menu.process('d')
+      @menu.process('u')
+      @menu.process('f')
+      @menu.process('n')
+      @menu.process('q')
+      @menu.process('c')
+      @menu.process('s')
+    end
+
+    describe "when a phonebook isn't open" do
+      it "should only allow creating and quitting" do
+        any_instance_of(PhoneBook) do |pb|
+          dont_allow(pb).print
+          dont_allow(pb).import
+          mock(pb).create
+          mock(pb).select
+        end
+        any_instance_of(Contact) do |c|
+          dont_allow(c).add_new
+          dont_allow(c).find_by_name
+          dont_allow(c).find_by_number
+        end
+
+        run_menu
+      end
+    end
+
     describe "when a phonebook is open" do
-      it "should allow all actions"
+      it "should allow all actions" do
+        any_instance_of(PhoneBook) do |pb|
+          dont_allow(pb).print
+          dont_allow(pb).import
+          mock(pb).create
+          mock(pb).select
+        end
+        any_instance_of(Contact) do |c|
+          dont_allow(c).add_new
+          dont_allow(c).find_by_name
+          dont_allow(c).find_by_number
+        end
+
+        run_menu
+      end
     end
   end
 end
