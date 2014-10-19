@@ -1,5 +1,10 @@
 class PhoneBook
-
+  def create
+    puts "Enter a file name for the new phone book"
+    file = STDIN.gets().chomp()
+    FileUtils.touch(file)
+    return file
+  end
 end
 
 class Contact

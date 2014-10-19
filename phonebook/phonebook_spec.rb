@@ -1,3 +1,4 @@
+require 'tempfile'
 require 'rspec'
 require './phonebook'
 
@@ -7,7 +8,24 @@ end
 
 describe "Phonebook" do
   describe "#create" do
-    it "should create a new phonebook"
+    it "should create a new phonebook" do
+      tempfile = Tempfile.new(['foo', '.pb'])
+      path = tempfile.path
+      tempfile.close
+      tempfile.unlink
+      begin
+        mock(STDIN).gets() {path}
+        expect( File.exists?(path) ).to be false
+
+        retval = PhoneBook.new.create
+        
+        expect( File.exists?(path) ).to be true
+        expect(retval).to eql path
+      ensure
+        File.delete(path)
+      end
+
+    end
   end
 
   describe "#select" do
