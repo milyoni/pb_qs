@@ -15,7 +15,7 @@ class Contact
 
   def find_by_name
     print "Enter name to find: "
-    name = STDIN.gets().chomp()
+    name = STDIN.gets().chomp().downcase()
     CSV.read(@phonebook.phonebook).each do |line|
       if /#{name}/ === line[1].downcase
         puts line.values_at(0, 2, 1).join( "\t" )
