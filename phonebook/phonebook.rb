@@ -1,21 +1,40 @@
 class PhoneBook
+  attr_accessor :phonebook
+
+  def initialize(pb = nil)
+    @phonebook = pb
+  end
+
   def create
     print "Enter a file name for the new phone book: "
     file = STDIN.gets().chomp()
     FileUtils.touch(file)
-    return file
+    @phonebook = file
   end
 
   def select
     # We're not going to show the user a list of phone books for this exercise.
     # We should, though. Something like a file browser.
     print "Type in the phone book file name: "
-    return STDIN.gets().chomp()
+    @phonebook = STDIN.gets().chomp()
+  end
+
+  def print_book
+    # File browser needed in a real project
+    puts File.read @phonebook
   end
 end
 
 class Contact
+  def add_new
 
+  end
+  def find_by_name
+
+  end
+  def find_by_number
+
+  end
 end
 
 class Menu
@@ -56,17 +75,21 @@ N - Lookup names by number
     when 'q'
       return
     when 's'
-      @phonebook = PhoneBook.new.select
+      @phonebook = PhoneBook.new
+      @phonebook.select
     when 'c'
-      @phonebook = PhoneBook.new.create
+      @phonebook = PhoneBook.new
+      @phonebook.create
+    when 'p'
+      @phonebook.print_book
     when 'i'
       @phonebook.import
     when 'a'
       Contact.add_new(@phonebook)
     when 'f'
-      Contact.new.find_by_name(@phonebook)
+      Contact.new(@phonebook).find_by_name
     when 'n'
-      Contact.new.find_by_number(@phonebook)
+      Contact.new(@phonebook).find_by_number
     else
       puts 'Invalid choice'
     end
