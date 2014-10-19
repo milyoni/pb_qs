@@ -65,7 +65,19 @@ describe "Contact" do
     end
 
     describe "#find_by_number" do
-      it "should look up names given a number"
+      it "should look up names given a number" do
+        mock(STDIN).gets() { "000-000-0013\n"}
+        mock(STDOUT).puts("7\t000-000-0013\tHiroko Lackey")
+
+        @contact.find_by_number()
+      end
+      it "should look up names given a partial number" do
+        mock(STDIN).gets() { "3\n"}
+        mock(STDOUT).puts("3\t000-000-0003\tBlythe Barba")
+        mock(STDOUT).puts("7\t000-000-0013\tHiroko Lackey")
+
+        @contact.find_by_number()
+      end
     end
   end
 end
