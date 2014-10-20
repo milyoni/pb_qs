@@ -4,9 +4,6 @@ class Contact
   extend ConIO
   include ConIO
   attr_accessor :phonebook
-  NUMBER = 2
-  NAME = 1
-  INDEX = 0
 
   def initialize(pb)
     @phonebook = pb
@@ -19,19 +16,14 @@ class Contact
   end
 
   def update
+    # Reads entire phonebook into memory. Ugh.
     index = find_by_name(true)
     number = prompt('Enter new number: ')
-    lines = CSV.read(@phonebook.phonebook)
-    @phonebook.write("wb") do |csv|
-      lines.each do |line|
-        line[NUMBER] = number if line[INDEX] == index
-        csv << line
-      end
-    end
+    @phonebook.update(index, number)
   end
 
   def find_by_name(get_index=false)
-    find NAME, prompt('Enter name to find: ').downcase()
+    find :name, prompt('Enter name to find: ').downcase()
     if get_index
       return prompt('Enter index number to change: ')
     end
@@ -40,12 +32,12 @@ class Contact
   # Not a requirement, but we can leverage this method to ask for which record
   # to update, just like we did with find_by_name
   def find_by_number
-    find NUMBER, prompt('Enter number to find: ').downcase()
+    find :number, prompt('Enter number to find: ').downcase()
   end
 
   private
   def print_entry(line)
-    puts line.values_at(0, 2, 1).join( "\t" )
+    puts line.values_at(:index, :number, :name).join( "\t" )
   end
 
   def find(key, item)
